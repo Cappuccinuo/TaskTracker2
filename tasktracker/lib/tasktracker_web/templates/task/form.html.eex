@@ -1,0 +1,67 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= textarea f, :title, class: "form-control" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :description, class: "control-label" %>
+    <%= textarea f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :completed, class: "control-label" %>
+    <%= checkbox f, :completed, class: "checkbox" %>
+    <%= error_tag f, :completed %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :time, class: "control-label" %>
+    <%= number_input f, :time, step: "15", min: "0", class: "form-control" %>
+    <%= error_tag f, :time %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :worker_id, class: "control-label" %>
+    <%= number_input f, :worker_id, min: "1", class: "form-control" %>
+    <%= error_tag f, :worker_id %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        Id
+      </th>
+      <th>Email</th>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<h4>User lists</h4>
+<%= for user <- @users do %>
+    <tr>
+      <td>
+        <%= user.id %>
+      </td>
+      <td><%= user.email %></td>
+      <td><%= user.name %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
