@@ -1,0 +1,37 @@
+<h2>My profile</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Manager Id</th>
+      <th>Manager Email</th>
+      <th>Manager Name</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><%= @manager.id %></td>
+        <td><%= @manager.email %></td>
+        <td><%= @manager.name %></td>
+      </tr>
+  </tbody>
+</table>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Worker Id</th>
+      <th>Worker Email</th>
+      <th>Worker Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for worker <- @workers do %>
+      <tr>
+        <td><%= worker.id %></td>
+        <td><%= worker.email %></td>
+        <td><%= worker.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

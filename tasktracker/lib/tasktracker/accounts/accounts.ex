@@ -21,6 +21,12 @@ defmodule Tasktracker.Accounts do
     Repo.all(User)
   end
 
+  def list_workers(id) do
+    filters = [manager_id: id]
+    query = from p in User, where: ^filters
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single user.
 
@@ -36,6 +42,12 @@ defmodule Tasktracker.Accounts do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
+
+  def get_manager(id) do
+    %User{:manager_id => manager_id} = get_user!(id)
+    manager_id
+    |> get_user!()
+  end
 
   @doc """
   Creates a user.

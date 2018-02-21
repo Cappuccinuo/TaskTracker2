@@ -16,4 +16,10 @@ defmodule TasktrackerWeb.PageController do
     users = Tasktracker.Accounts.list_users()
     render conn, "release.html", tasks: tasks, users: users
   end
+
+  def profile(conn, _params) do
+    manager = Tasktracker.Accounts.get_manager(conn.assigns.current_user.id)
+    workers = Tasktracker.Accounts.list_workers(conn.assigns.current_user.id)
+    render conn, "profile.html", manager: manager, workers: workers
+  end
 end

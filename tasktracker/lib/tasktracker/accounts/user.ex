@@ -7,6 +7,7 @@ defmodule Tasktracker.Accounts.User do
   schema "users" do
     field :email, :string, null: false
     field :name, :string, null: false
+    field :manager_id, :integer
     has_many :tasks, Tasktracker.Mission.Task
 
     timestamps()

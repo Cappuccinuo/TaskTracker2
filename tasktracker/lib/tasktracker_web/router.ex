@@ -30,6 +30,7 @@ defmodule TasktrackerWeb.Router do
     resources "/sessions", SessionController
     get "/feed", PageController, :feed
     get "/release", PageController, :release
+    get "/profile", PageController, :profile
 
   end
 
