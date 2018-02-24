@@ -6,13 +6,14 @@ defmodule TasktrackerWeb.PageController do
   end
 
   def feed(conn, _params) do
-    tasks = Tasktracker.Mission.list_tasks()
+    tasks = Tasktracker.Mission.my_todo_tasks(conn.assigns.current_user.id)
     users = Tasktracker.Accounts.list_users()
-    render conn, "feed.html", tasks: tasks, users: users
+    times = Tasktracker.Mission.times_map_for()
+    render conn, "feed.html", tasks: tasks, users: users, times: times
   end
 
   def release(conn, _params) do
-    tasks = Tasktracker.Mission.list_tasks()
+    tasks = Tasktracker.Mission.my_assigned_tasks(conn.assigns.current_user.id)
     users = Tasktracker.Accounts.list_users()
     render conn, "release.html", tasks: tasks, users: users
   end

@@ -20,3 +20,46 @@ import $ from "jquery";
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+function update_buttons() {
+  $('.start-end-button').each((_, bb) => {
+    let task_id = $(bb).data('task-id');
+    let time_id = $(bb).data('time-id');
+    if (count % 2 == 0) {
+      $(bb).text("Stop");
+    }
+    else {
+      $(bb).text("Start");
+    }
+  });
+}
+
+function stop(task_id, time_id) {
+  alert("stop");
+}
+
+function start(task_id) {
+  x = new Date();
+  alert(x);
+}
+
+function control_click(ev) {
+  let btn = $(ev.target);
+  let task_id = btn.data('task-id');
+  let time_id = btn.data('time-id');
+  if (time_id != "") {
+    stop(task_id);
+  }
+  else {
+    start(task_id);
+  }
+}
+
+function init_control() {
+  if (!$('.start-end-button')) {
+    return;
+  }
+  $(".start-end-button").click(control_click);
+  //update_buttons();
+}
+
+$(init_control);

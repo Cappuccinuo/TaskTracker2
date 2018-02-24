@@ -22,6 +22,19 @@ defmodule Tasktracker.Mission do
     |> Repo.preload(:user)
   end
 
+  def my_todo_tasks(user_id) do
+    Repo.all(from t in Task,
+      where: t.worker_id == ^user_id)
+  end
+
+  def my_assigned_tasks(current_user_id) do
+    workers = Tasktracker.Accounts.list_workers(current_user_id)
+    |> Enum.into([])
+    |> Enum.map(fn(x) -> x.id end)
+    Repo.all(from t in Task,
+      where: t.worker_id in ^workers)
+  end
+
   @doc """
   Gets a single task.
 

@@ -18,8 +18,7 @@ defmodule TasktrackerWeb.TaskController do
   def index(conn, _params, _current_user) do
     tasks = Mission.list_tasks()
     users = Accounts.list_users()
-    times = Mission.times_map_for()
-    render(conn, "index.html", tasks: tasks, users: users, times: times)
+    render(conn, "index.html", tasks: tasks, users: users)
   end
 
   #def index(conn, _params, current_user) do
