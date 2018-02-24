@@ -1,3 +1,8 @@
+<script>
+  window.time_path = "<%= time_path(@conn, :index) %>";
+  window.current_user_id = "<%= @current_user.id %>";
+</script>
+
 <h2>All Tasks</h2>
 <table class="table">
   <thead>
@@ -32,6 +37,27 @@
           <% end %>
         <% end %>
       </td>
+      <%= if @current_user.id == task.worker_id do %>
+        <td>
+          <button class="start-button"
+                  data-task-id="<%= task.id %>"
+                  data-time="<%= @times[task.id] %>">
+                  Start
+          </button>
+        </td>
+        <td>
+          <button class="end-button"
+                  data-task-id="<%= task.id %>"
+                  data-time="<%= @times[task.id] %>">
+                  End
+          </button>
+        </td>
+      <% else %>
+        <td>
+        </td>
+        <td>
+        </td>
+      <% end %>
 
       <%= if @current_user.id == task.user_id or @current_user.id == task.worker_id do %>
       <td class="text-right">
@@ -49,5 +75,8 @@
 <% end %>
   </tbody>
 </table>
+
+
+
 
 <span><%= link "New Task", to: task_path(@conn, :new) %></span>
