@@ -38,8 +38,8 @@ defmodule TasktrackerWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params}, _current_user) do
-    #%{"worker_id" => worker_id} = task_params
-    #user = Accounts.User |> Repo.get!(worker_id)
+    %{"worker_id" => worker_id} = task_params
+    user = Accounts.User |> Repo.get!(worker_id)
     #changeset = user
     changeset = conn.assigns.current_user
       |> Ecto.build_assoc(:tasks)
@@ -110,13 +110,21 @@ defmodule TasktrackerWeb.TaskController do
   def check_manager(conn, _params) do
     %{"task" => task_params} = conn.body_params
     %{"worker_id" => worker_id} = task_params
-    if Repo.get(User, worker_id).manager_id == conn.assigns.current_user.id do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You are not manager")
-      |> redirect(to: task_path(conn, :index))
-      |> halt()
+    case Repo.get(User, worker_id) do
+      nil ->
+        conn
+        |> put_flash(:error, "Invalid Worker_id")
+        |> redirect(to: task_path(conn, :new))
+        |> halt()
+      user ->
+        if user.manager_id == conn.assigns.current_user.id do
+          conn
+        else
+          conn
+          |> put_flash(:error, "You are not manager")
+          |> redirect(to: task_path(conn, :index))
+          |> halt()
+        end
     end
   end
 
