@@ -16,8 +16,8 @@
     <tr>
       <td><%= task.title %></td>
       <td><%= task.description %></td>
-      <td><%= task.completed %></td>
-      <td><%= task.time %></td>
+      <td></td>
+      <td></td>
       <td>
         <%= for user <- @users do %>
           <%= if task.user_id == user.id do %>

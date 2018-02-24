@@ -15,8 +15,9 @@ defmodule TasktrackerWeb.PageController do
 
   def release(conn, _params) do
     tasks = Tasktracker.Mission.my_assigned_tasks(conn.assigns.current_user.id)
+    task_time_map = Tasktracker.Mission.assigned_map_for(tasks)
     users = Tasktracker.Accounts.list_users()
-    render conn, "release.html", tasks: tasks, users: users
+    render conn, "release.html", tasks: tasks, users: users, task_time_map: task_time_map
   end
 
   def profile(conn, _params) do

@@ -5,8 +5,8 @@ defmodule Tasktracker.Mission.Time do
   alias Tasktracker.Mission.Task
 
   schema "time" do
-    field :end_time, :utc_datetime
-    field :start_time, :utc_datetime
+    field :end_time, :utc_datetime, default: nil
+    field :start_time, :utc_datetime, default: nil
     field :completed, :boolean, default: false
     belongs_to :task, Task
 

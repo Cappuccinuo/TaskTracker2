@@ -6,7 +6,8 @@
       <th>Title</th>
       <th>Description</th>
       <th>Completed</th>
-      <th>Time</th>
+      <th>Start Time</th>
+      <th>End Time</th>
       <th>Worker</th>
       <th></th>
     </tr>
@@ -17,8 +18,23 @@
         <tr>
           <td><%= task.title %></td>
           <td><%= task.description %></td>
-          <td><%= task.completed %></td>
-          <td><%= task.time %></td>
+          <td>
+            <%= if @task_time_map[task.id] != nil do %>
+              <%= @task_time_map[task.id].completed %>
+            <% else %>
+              <%= false %>
+            <% end %>
+          </td>
+          <td>
+            <%= if @task_time_map[task.id] != nil do %>
+              <%= @task_time_map[task.id].start_time %>
+            <% end %>
+          </td>
+          <td>
+            <%= if @task_time_map[task.id] != nil do %>
+              <%= @task_time_map[task.id].end_time %>
+            <% end %>
+          </td>
           <td>
             <%= for user <- @users do %>
               <%= if task.worker_id == user.id do %>

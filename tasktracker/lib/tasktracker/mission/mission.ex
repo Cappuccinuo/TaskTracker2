@@ -20,11 +20,16 @@ defmodule Tasktracker.Mission do
   def list_tasks do
     Repo.all(Task)
     |> Repo.preload(:user)
+    |> Repo.preload(:worker)
+    |> Repo.preload(:task_time)
   end
 
   def my_todo_tasks(user_id) do
     Repo.all(from t in Task,
       where: t.worker_id == ^user_id)
+    |> Repo.preload(:user)
+    |> Repo.preload(:worker)
+    |> Repo.preload(:task_time)
   end
 
   def my_assigned_tasks(current_user_id) do
@@ -33,6 +38,15 @@ defmodule Tasktracker.Mission do
     |> Enum.map(fn(x) -> x.id end)
     Repo.all(from t in Task,
       where: t.worker_id in ^workers)
+    |> Repo.preload(:user)
+    |> Repo.preload(:worker)
+    |> Repo.preload(:task_time)
+  end
+
+  def assigned_map_for(tasks) do
+    tasks
+    |> Enum.map(&({&1.id, &1.task_time}))
+    |> Enum.into(%{})
   end
 
   @doc """
