@@ -20,7 +20,7 @@ defmodule Tasktracker.Mixfile do
   def application do
     [
       mod: {Tasktracker.Application, []},
-      extra_applications: [:logger, :runtime_tools, :guardian]
+      extra_applications: [:logger, :runtime_tools, :guardian, :timex]
     ]
   end
 
@@ -41,7 +41,8 @@ defmodule Tasktracker.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:guardian, "~> 0.14"}
+      {:guardian, "~> 0.14"},
+      {:timex, "~> 3.1"}
     ]
   end
 

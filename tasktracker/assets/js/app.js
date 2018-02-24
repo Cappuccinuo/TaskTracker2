@@ -24,7 +24,7 @@ function update_buttons() {
   $('.start-end-button').each((_, bb) => {
     let task_id = $(bb).data('task-id');
     let time_id = $(bb).data('time-id');
-    if (count % 2 == 0) {
+    if (time_id != "") {
       $(bb).text("Stop");
     }
     else {
@@ -33,13 +33,45 @@ function update_buttons() {
   });
 }
 
-function stop(task_id, time_id) {
-  alert("stop");
+function set_button(task_id, time_id) {
+  $('.start-end-button').each((_, bb) => {
+    if (task_id == $(bb).data('task-id')) {
+      $(bb).data('time-id', time_id);
+    }
+  });
+  update_buttons();
+}
+
+function stop(time_id) {
+  let text = JSON.stringify({
+    time: {
+      end_time: new Date()
+    },
+  });
+  $.ajax(time_path + "/" + time_id, {
+    method: "put",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: text,
+    success: (resp) => {alert("Completed.")},
+  });
 }
 
 function start(task_id) {
-  x = new Date();
-  alert(x);
+  let text = JSON.stringify({
+    time: {
+      task_id: task_id,
+      start_time: new Date(),
+      end_time: new Date(0)
+    },
+  });
+  $.ajax(time_path, {
+    method: "post",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: text,
+    success: (resp) => { set_button(task_id, resp.data.id); },
+  });
 }
 
 function control_click(ev) {
@@ -47,7 +79,7 @@ function control_click(ev) {
   let task_id = btn.data('task-id');
   let time_id = btn.data('time-id');
   if (time_id != "") {
-    stop(task_id);
+    stop(time_id);
   }
   else {
     start(task_id);
@@ -59,7 +91,7 @@ function init_control() {
     return;
   }
   $(".start-end-button").click(control_click);
-  //update_buttons();
+  update_buttons();
 }
 
 $(init_control);
