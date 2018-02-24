@@ -42,13 +42,13 @@
   </thead>
   <tbody>
 <h4>Your workers</h4>
-<%= for user <- @users do %>
+<%= for worker <- @workers do %>
     <tr>
       <td>
-        <%= user.id %>
+        <%= worker.id %>
       </td>
-      <td><%= user.email %></td>
-      <td><%= user.name %></td>
+      <td><%= worker.email %></td>
+      <td><%= worker.name %></td>
     </tr>
 <% end %>
   </tbody>

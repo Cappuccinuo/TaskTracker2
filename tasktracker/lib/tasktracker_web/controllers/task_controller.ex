@@ -72,7 +72,8 @@ defmodule TasktrackerWeb.TaskController do
     task = Mission.get_task!(id)
     users = Accounts.list_users()
     changeset = Mission.change_task(task)
-    render(conn, "edit.html", task: task, users: users, changeset: changeset)
+    workers = Accounts.list_workers(conn.assigns.current_user.id)
+    render(conn, "edit.html", task: task, users: users, workers: workers, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}, _current_user) do
@@ -131,8 +132,7 @@ defmodule TasktrackerWeb.TaskController do
   def check_task_owner(conn, _params) do
     %{params: %{"id" => task_id}} = conn
 
-    if Repo.get(Task, task_id).user_id == conn.assigns.current_user.id
-      or Repo.get(Task, task_id).worker_id == conn.assigns.current_user.id do
+    if Repo.get(Task, task_id).user_id == conn.assigns.current_user.id do
       conn
     else
       conn
