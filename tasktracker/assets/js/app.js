@@ -24,7 +24,11 @@ function update_buttons() {
   $('.start-end-button').each((_, bb) => {
     let task_id = $(bb).data('task-id');
     let time_id = $(bb).data('time-id');
-    if (time_id != "") {
+    let completed = $(bb).data('completed');
+    if (completed == true) {
+      $(bb).text("Restart");
+    }
+    else if (time_id != "") {
       $(bb).text("Stop");
     }
     else {
@@ -33,19 +37,21 @@ function update_buttons() {
   });
 }
 
-function set_button(task_id, time_id) {
+function set_button(task_id, time_id, completed) {
   $('.start-end-button').each((_, bb) => {
     if (task_id == $(bb).data('task-id')) {
       $(bb).data('time-id', time_id);
+      $(bb).data('completed', completed);
     }
   });
   update_buttons();
 }
 
-function stop(time_id) {
+function stop(task_id, time_id) {
   let text = JSON.stringify({
     time: {
-      end_time: new Date()
+      end_time: new Date(),
+      completed: true
     },
   });
   $.ajax(time_path + "/" + time_id, {
@@ -53,7 +59,7 @@ function stop(time_id) {
     dataType: "json",
     contentType: "application/json; charset=UTF-8",
     data: text,
-    success: (resp) => {alert("Completed.")},
+    success: (resp) => { set_button(task_id, resp.data.id, true) },
   });
 }
 
@@ -70,7 +76,24 @@ function start(task_id) {
     dataType: "json",
     contentType: "application/json; charset=UTF-8",
     data: text,
-    success: (resp) => { set_button(task_id, resp.data.id); },
+    success: (resp) => { set_button(task_id, resp.data.id, false); },
+  });
+}
+
+function restart(task_id, time_id) {
+  let text = JSON.stringify({
+    time: {
+      task_id: task_id,
+      end_time: new Date(0),
+      completed: false
+    },
+  });
+  $.ajax(time_path + "/" + time_id, {
+    method: "put",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: text,
+    success: (resp) => { set_button(task_id, resp.data.id, false) },
   });
 }
 
@@ -78,8 +101,12 @@ function control_click(ev) {
   let btn = $(ev.target);
   let task_id = btn.data('task-id');
   let time_id = btn.data('time-id');
-  if (time_id != "") {
-    stop(time_id);
+  let completed = btn.data('completed');
+  if (completed == true) {
+    restart(task_id, time_id);
+  }
+  else if (time_id != "") {
+    stop(task_id, time_id);
   }
   else {
     start(task_id);

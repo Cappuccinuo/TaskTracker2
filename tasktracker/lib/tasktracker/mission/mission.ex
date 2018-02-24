@@ -137,6 +137,12 @@ defmodule Tasktracker.Mission do
     |> Enum.into(%{})
   end
 
+  def completed_map_for do
+    Repo.all(Time)
+    |> Enum.map(&({&1.task_id, &1.completed}))
+    |> Enum.into(%{})
+  end
+
   @doc """
   Gets a single time.
 
