@@ -5,10 +5,10 @@ defmodule TasktrackerWeb.TaskController do
   alias Tasktracker.Mission.Task
   alias Tasktracker.Accounts
   alias Tasktracker.Repo
+  alias Tasktracker.Accounts.User
 
   plug :check_task_owner when action in [:update, :edit, :delete]
-
-
+  plug :check_manager when action in [:create]
 
   def action(conn, _) do
     apply(__MODULE__, action_name(conn),
@@ -31,9 +31,9 @@ defmodule TasktrackerWeb.TaskController do
   #  render(conn, "index.html", tasks: tasks)
   #end
 
-  def new(conn, _params, _current_user) do
+  def new(conn, _params, current_user) do
     changeset = Mission.change_task(%Task{})
-    users = Accounts.list_users()
+    users = Accounts.list_workers(current_user.id)
     render(conn, "new.html", users: users, changeset: changeset)
   end
 
@@ -105,6 +105,19 @@ defmodule TasktrackerWeb.TaskController do
     user
     |> user_tasks
     |> Repo.get(task_id)
+  end
+
+  def check_manager(conn, _params) do
+    %{"task" => task_params} = conn.body_params
+    %{"worker_id" => worker_id} = task_params
+    if Repo.get(User, worker_id).manager_id == conn.assigns.current_user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You are not manager")
+      |> redirect(to: task_path(conn, :index))
+      |> halt()
+    end
   end
 
   def check_task_owner(conn, _params) do

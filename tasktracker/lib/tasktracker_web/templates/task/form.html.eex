@@ -18,18 +18,6 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :completed, class: "control-label" %>
-    <%= checkbox f, :completed, class: "checkbox" %>
-    <%= error_tag f, :completed %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :time, class: "control-label" %>
-    <%= number_input f, :time, step: "15", min: "0", class: "form-control" %>
-    <%= error_tag f, :time %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :worker_id, class: "control-label" %>
     <%= number_input f, :worker_id, min: "1", class: "form-control" %>
     <%= error_tag f, :worker_id %>
@@ -53,7 +41,7 @@
     </tr>
   </thead>
   <tbody>
-<h4>User lists</h4>
+<h4>Your workers</h4>
 <%= for user <- @users do %>
     <tr>
       <td>

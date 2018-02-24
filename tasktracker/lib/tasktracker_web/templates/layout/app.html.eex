@@ -29,7 +29,7 @@
               <%= link "Todo tasks", to: page_path(@conn, :feed) %>
             </li>
             <li>
-              <%= @current_user.name %> (<%= @current_user.id %>)
+              <a href="/profile"><%= @current_user.name %> (<%= @current_user.id %>)</a>
             </li>
             <li>
               <%= link "Sign out", to: session_path(@conn, :delete, @current_user),

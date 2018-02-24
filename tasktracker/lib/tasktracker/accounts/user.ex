@@ -16,7 +16,7 @@ defmodule Tasktracker.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :name])
-    |> validate_required([:email, :name])
+    |> cast(attrs, [:email, :name, :manager_id])
+    |> validate_required([:email, :name, :manager_id])
   end
 end
