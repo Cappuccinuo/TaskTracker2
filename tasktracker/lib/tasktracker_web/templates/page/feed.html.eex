@@ -80,6 +80,7 @@
             <%= for tt <- @alltime[task.id] do %>
               <p>
                 <button class="delete-button"
+                        data-task-id="<%= task.id %>"
                         data-time-id="<%= tt.id %>"
                         onClick="history.go(0)">
                         Delete

@@ -45,7 +45,7 @@ defmodule Tasktracker.Mission do
 
   def assigned_map_for(tasks) do
     tasks
-    |> Enum.map(&({&1.id, &1.task_time}))
+    |> Enum.map(&({&1.id, Enum.reverse(&1.task_time)}))
     |> Enum.into(%{})
   end
 

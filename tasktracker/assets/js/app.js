@@ -116,22 +116,27 @@ function control_click(ev) {
 
 function control_click_delete(ev) {
   let btn = $(ev.target);
+  let task_id = btn.data('task-id');
   let time_id = btn.data('time-id');
   $.ajax(time_path + "/" + time_id, {
     method: "delete",
     dataType: "json",
     contentType: "application/json; charset=UTF-8",
     data: "",
-    success: () => {alert("delete")}
+    success: () => { set_button(task_id, "", "") }
   });
 }
 
 function init_control() {
-  if (!$('.start-end-button') || !$('.delete-button')) {
+  if (!$('.start-end-button') && !$('.delete-button')) {
     return;
   }
-  $(".start-end-button").click(control_click);
-  $(".delete-button").click(control_click_delete);
+  if ($('.start-end-button')) {
+    $(".start-end-button").click(control_click);
+  }
+  if ($('.delete-button')) {
+    $(".delete-button").click(control_click_delete);
+  }
   update_buttons();
 }
 
