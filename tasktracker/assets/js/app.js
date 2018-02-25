@@ -81,12 +81,12 @@ function start(task_id) {
   });
 }
 
-function restart(task_id, time_id) {
+function finish_current_task(task_id, time_id, end_time) {
   let text = JSON.stringify({
     time: {
       task_id: task_id,
-      end_time: new Date(0),
-      completed: false
+      end_time: end_time,
+      completed: true
     },
   });
   $.ajax(time_path + "/" + time_id, {
@@ -94,7 +94,7 @@ function restart(task_id, time_id) {
     dataType: "json",
     contentType: "application/json; charset=UTF-8",
     data: text,
-    success: (resp) => { set_button(task_id, resp.data.id, false) },
+    success: (resp) => { set_button(task_id, resp.data.id, true) },
   });
 }
 
@@ -130,25 +130,39 @@ function control_click_delete(ev) {
 function control_click_submit(ev) {
   let btn = $(ev.target);
   let task_id = btn.data('task-id');
+  let time_id = btn.data('time-id');
   let start_time = $('.start-time').val();
   let end_time = $('.end-time').val();
-  alert(start_time);
-  alert(end_time);
-  let text = JSON.stringify({
-    time: {
-      task_id: task_id,
-      start_time: start_time,
-      end_time: end_time,
-      completed: false
-    },
-  });
-  $.ajax(time_path, {
-    method: "post",
-    dataType: "json",
-    contentType: "application/json; charset=UTF-8",
-    data: text,
-    success: (resp) => { set_button(task_id, resp.data.id, false); },
-  });
+  let completed = btn.data('completed');
+  if (!completed && start_time != "") {
+    alert("You must finish current task time frame.");
+    return;
+  }
+  if (!completed && start_time == "" && end_time != "") {
+    finish_current_task(task_id, time_id, end_time);
+  }
+  else {
+    if (end_time == "") {
+      end_time = new Date(0);
+    }
+    alert(start_time);
+    alert(end_time);
+    let text = JSON.stringify({
+      time: {
+        task_id: task_id,
+        start_time: start_time,
+        end_time: end_time,
+        completed: false
+      },
+    });
+    $.ajax(time_path, {
+      method: "post",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: text,
+      success: (resp) => { set_button(task_id, resp.data.id, false); },
+    });
+  }
 }
 
 function init_control() {

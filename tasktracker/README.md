@@ -7,3 +7,4 @@ error when the id is Invalid or the user is not the manager of the given Id.
   - When he/she stop, he/she can restart, the task will change from completed
   -> not completed, the task start time will still be the origin start time.
 3. The time-zone is Coordinated Universal Time (UTC).
+4. You must finish current task time frame, then start another one.
