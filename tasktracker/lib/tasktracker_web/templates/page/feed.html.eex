@@ -107,7 +107,7 @@ h2 {
             <%= for tt <- @alltime[task.id] do %>
               <p>
                 <%= if tt != nil do %>
-                  <%= tt.start_time %>
+                  <%= cast_time tt.start_time %>
                 <% end %>
               </p>
             <% end %>
@@ -116,7 +116,7 @@ h2 {
             <%= for tt <- @alltime[task.id] do %>
               <p>
                 <%= if tt != nil do %>
-                  <%= tt.end_time %>
+                  <%= cast_time tt.end_time %>
                 <% end %>
               </p>
             <% end %>
