@@ -1,10 +1,15 @@
 <h2>Assigned Tasks</h2>
 
+<style>
+.table {
+  width: 1000px;
+}
+</style>
+
 <table class="table">
   <thead>
     <tr>
       <th>Title</th>
-      <th>Description</th>
       <th>Completed</th>
       <th>Start Time</th>
       <th>End Time</th>
@@ -17,22 +22,31 @@
       <%= if @current_user.id == task.user_id do %>
         <tr>
           <td><%= task.title %></td>
-          <td><%= task.description %></td>
           <td>
-            <%= if @task_time_map[task.id] != nil do %>
-              <%= @task_time_map[task.id].completed %>
-            <% else %>
-              <%= false %>
+            <%= for tt <- @task_time_map[task.id] do %>
+              <p>
+                <%= if tt != nil do %>
+                  <%= tt.completed %>
+                <% end %>
+              </p>
             <% end %>
           </td>
           <td>
-            <%= if @task_time_map[task.id] != nil do %>
-              <%= @task_time_map[task.id].start_time %>
+            <%= for tt <- @task_time_map[task.id] do %>
+              <p>
+                <%= if tt != nil do %>
+                  <%= tt.start_time %>
+                <% end %>
+              </p>
             <% end %>
           </td>
           <td>
-            <%= if @task_time_map[task.id] != nil do %>
-              <%= @task_time_map[task.id].end_time %>
+            <%= for tt <- @task_time_map[task.id] do %>
+              <p>
+                <%= if tt != nil do %>
+                  <%= tt.end_time %>
+                <% end %>
+              </p>
             <% end %>
           </td>
           <td>

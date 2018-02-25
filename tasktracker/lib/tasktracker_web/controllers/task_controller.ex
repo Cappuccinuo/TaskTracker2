@@ -34,7 +34,8 @@ defmodule TasktrackerWeb.TaskController do
   def new(conn, _params, current_user) do
     changeset = Mission.change_task(%Task{})
     users = Accounts.list_workers(current_user.id)
-    render(conn, "new.html", users: users, changeset: changeset)
+    workers = Accounts.list_workers(conn.assigns.current_user.id)
+    render(conn, "new.html", users: users, changeset: changeset, workers: workers)
   end
 
   def create(conn, %{"task" => task_params}, _current_user) do

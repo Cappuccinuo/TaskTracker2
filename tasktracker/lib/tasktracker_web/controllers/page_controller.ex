@@ -10,7 +10,8 @@ defmodule TasktrackerWeb.PageController do
     users = Tasktracker.Accounts.list_users()
     times = Tasktracker.Mission.times_map_for()
     completed = Tasktracker.Mission.completed_map_for()
-    render conn, "feed.html", tasks: tasks, users: users, times: times, completed: completed
+    alltime = Tasktracker.Mission.assigned_map_for(tasks)
+    render conn, "feed.html", tasks: tasks, users: users, times: times, completed: completed, alltime: alltime
   end
 
   def release(conn, _params) do
