@@ -56,7 +56,7 @@ h2 {
       <th>Initiator</th>
       <th>Start/Stop</th>
       <th></th>
-      <th>Completed</th>
+      <th>Status</th>
       <th>Start Time</th>
       <th>Stop Time</th>
       <th></th>
@@ -98,7 +98,7 @@ h2 {
             <%= for tt <- @alltime[task.id] do %>
               <p>
                 <%= if tt != nil do %>
-                  <%= tt.completed %>
+                  <%= complete_status tt.completed %>
                 <% end %>
               </p>
             <% end %>
