@@ -8,18 +8,46 @@ h2 {
   margin-left: -300px;
 }
 
+.form {
+  margin-left: -100px;
+}
+
 .table {
   width: 1400px;
   margin-left: -300px;
 }
 
-.delete-button {
+.delete-button, .edit-button {
   height: 10px;
   font-size: 10px;
 }
+.start-time-10 {
+  width: 1000px;
+}
+
 </style>
 
 <h2>Todo Tasks</h2>
+<div class="form">
+  <p>
+    1. You can add a new time frame by entering start time and end time, then
+    click the submit button of any task
+  </p>
+  <p>
+    2. You can also click start and end to finish a new time frame
+  </p>
+  <p>
+    3. To edit the time frame, fill in the form, then click edit of the time block.
+    But you cannot edit while some task is unfinished.
+  </p>
+  <p>
+    4. To use the submit function, you must make sure you enter the right form
+    or date time, that is <strong>yyyy-mm-dd hh:mm:ss</strong>,</br>
+    and the start time must be earlier than the end time.
+  </p>
+  <span>Start Time: <input class="start-time"></input></span>
+  <span>End Time: <input class="end-time"></input></span>
+</div>
 
 <table class="table">
   <thead>
@@ -27,19 +55,12 @@ h2 {
       <th>Title</th>
       <th>Initiator</th>
       <th>Start/Stop</th>
-      <th>
-        New start time
-      </th>
-      <th>
-        New stop time
-      </th>
-      <th>
-
-      </th>
+      <th></th>
       <th>Completed</th>
       <th>Start Time</th>
       <th>Stop Time</th>
-      <th>Delete</th>
+      <th></th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -63,12 +84,7 @@ h2 {
                     Start
             </button>
           </td>
-          <td>
-            <input class="start-time" />
-          </td>
-          <td>
-            <input class="end-time" />
-          </td>
+
           <td>
             <button class="submit-button"
                     data-task-id="<%= task.id %>"
@@ -108,6 +124,18 @@ h2 {
           <td>
             <%= for tt <- @alltime[task.id] do %>
               <p>
+                <button class="edit-button"
+                        data-task-id="<%= task.id %>"
+                        data-time-id="<%= tt.id %>"
+                        onClick="history.go(0)">
+                        Edit
+                </button>
+              </p>
+            <% end %>
+          </td>
+          <td>
+            <%= for tt <- @alltime[task.id] do %>
+              <p>
                 <button class="delete-button"
                         data-task-id="<%= task.id %>"
                         data-time-id="<%= tt.id %>"
@@ -117,8 +145,6 @@ h2 {
               </p>
             <% end %>
           </td>
-
-
           <td class="text-right">
             <%= if @current_user.id == task.user_id do %>
               <span><%= link "Show", to: task_path(@conn, :show, task), class: "btn btn-default btn-xs" %></span>

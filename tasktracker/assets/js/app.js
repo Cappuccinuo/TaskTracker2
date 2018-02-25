@@ -123,7 +123,7 @@ function control_click_delete(ev) {
     dataType: "json",
     contentType: "application/json; charset=UTF-8",
     data: "",
-    success: () => { set_button(task_id, "", "") }
+    success: () => { set_button(task_id, "", true) }
   });
 }
 
@@ -142,9 +142,23 @@ function control_click_submit(ev) {
     finish_current_task(task_id, time_id, end_time);
   }
   else {
-    if (end_time == "") {
-      end_time = new Date(0);
+    if (start_time == "" && end_time == "") {
+      alert("Time cannot be empty")
+      return;
     }
+    if (end_time == "") {
+      alert("End time cannot be empty");
+      return;
+    }
+    if (start_time == "") {
+      alert("Start time cannot be empty");
+      return;
+    }
+    if (start_time > end_time) {
+      alert("Start time must be earlier than end time");
+      return;
+    }
+    alert(start_time < end_time);
     alert(start_time);
     alert(end_time);
     let text = JSON.stringify({
@@ -152,7 +166,7 @@ function control_click_submit(ev) {
         task_id: task_id,
         start_time: start_time,
         end_time: end_time,
-        completed: false
+        completed: true
       },
     });
     $.ajax(time_path, {
@@ -160,13 +174,61 @@ function control_click_submit(ev) {
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: text,
-      success: (resp) => { set_button(task_id, resp.data.id, false); },
+      success: (resp) => { set_button(task_id, resp.data.id, true); },
     });
   }
 }
 
+function control_click_edit(ev) {
+  let btn = $(ev.target);
+  let task_id = btn.data('task-id');
+  let time_id = btn.data('time-id');
+  let sebtn = $('.start-end-button');
+  let current_time = sebtn.data('time-id');
+  let current_task = sebtn.data('task-id');
+  let current_com = sebtn.data('completed');
+  let start_time = $('.start-time').val();
+  let end_time = $('.end-time').val();
+  let completed = btn.data('completed');
+  if (!current_com && current_time != time_id) {
+    alert("Please finish the unfinished task first.");
+    return;
+  }
+  if (start_time == "" && end_time == "") {
+    alert("Time cannot be empty")
+    return;
+  }
+  if (end_time == "") {
+    alert("End time cannot be empty");
+    return;
+  }
+  if (start_time == "") {
+    alert("Start time cannot be empty");
+    return;
+  }
+  if (start_time > end_time) {
+    alert("Start time must be earlier than end time");
+    return;
+  }
+  let text = JSON.stringify({
+    time: {
+      task_id: task_id,
+      start_time: start_time,
+      end_time: end_time,
+      completed: true
+    },
+  });
+  $.ajax(time_path + "/" + time_id, {
+    method: "put",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: text,
+    success: (resp) => { alert("Edit success.") },
+  });
+}
+
 function init_control() {
-  if (!$('.start-end-button') && !$('.delete-button') && !$('.submit-button')) {
+  if (!$('.start-end-button') && !$('.delete-button') && !$('.submit-button') && !$('.edit-button')) {
     return;
   }
   if ($('.start-end-button')) {
@@ -177,6 +239,9 @@ function init_control() {
   }
   if ($('.submit-button')) {
     $(".submit-button").click(control_click_submit);
+  }
+  if ($('.edit-button')) {
+    $(".edit-button").click(control_click_edit);
   }
   update_buttons();
 }
