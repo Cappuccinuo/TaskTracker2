@@ -1,8 +1,7 @@
 #!/bin/bash
 
-export PORT=5103
+export PORT=5104
 
 cd ~/www/tasktracker
 ./bin/tasktracker stop || true
 ./bin/tasktracker start
-
