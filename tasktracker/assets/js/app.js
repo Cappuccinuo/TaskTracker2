@@ -26,7 +26,7 @@ function update_buttons() {
     let time_id = $(bb).data('time-id');
     let completed = $(bb).data('completed');
     if (completed == true) {
-      $(bb).text("Restart");
+      $(bb).text("Start");
     }
     else if (time_id != "") {
       $(bb).text("Stop");
@@ -68,7 +68,8 @@ function start(task_id) {
     time: {
       task_id: task_id,
       start_time: new Date(),
-      end_time: new Date(0)
+      end_time: new Date(0),
+      completed: false
     },
   });
   $.ajax(time_path, {
@@ -103,7 +104,7 @@ function control_click(ev) {
   let time_id = btn.data('time-id');
   let completed = btn.data('completed');
   if (completed == true) {
-    restart(task_id, time_id);
+    start(task_id);
   }
   else if (time_id != "") {
     stop(task_id, time_id);

@@ -4,8 +4,6 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Completed</th>
-      <th>Time</th>
       <th>Initiator</th>
       <th>Worker</th>
       <th></th>
@@ -16,8 +14,6 @@
     <tr>
       <td><%= task.title %></td>
       <td><%= task.description %></td>
-      <td></td>
-      <td></td>
       <td>
         <%= for user <- @users do %>
           <%= if task.user_id == user.id do %>

@@ -11,16 +11,6 @@
     <%= @task.description %>
   </li>
 
-  <li>
-    <strong>Completed:</strong>
-    <%= @task.completed %>
-  </li>
-
-  <li>
-    <strong>Spending Time:</strong>
-    <%= @task.time %>
-  </li>
-
 </ul>
 
 <span><%= link "Edit", to: task_path(@conn, :edit, @task) %></span>
