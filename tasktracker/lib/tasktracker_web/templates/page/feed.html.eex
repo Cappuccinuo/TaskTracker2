@@ -4,8 +4,13 @@
 </script>
 
 <style>
+h2 {
+  margin-left: -300px;
+}
+
 .table {
-  width: 1000px;
+  width: 1400px;
+  margin-left: -300px;
 }
 
 .delete-button {
@@ -22,6 +27,15 @@
       <th>Title</th>
       <th>Initiator</th>
       <th>Start/Stop</th>
+      <th>
+        New start time
+      </th>
+      <th>
+        New stop time
+      </th>
+      <th>
+
+      </th>
       <th>Completed</th>
       <th>Start Time</th>
       <th>Stop Time</th>
@@ -47,6 +61,21 @@
                     data-completed="<%= @completed[task.id] %>"
                     onClick="history.go(0)">
                     Start
+            </button>
+          </td>
+          <td>
+            <input class="start-time" />
+          </td>
+          <td>
+            <input class="end-time" />
+          </td>
+          <td>
+            <button class="submit-button"
+                    data-task-id="<%= task.id %>"
+                    data-time-id="<%= @times[task.id] %>"
+                    data-completed="<%= @completed[task.id] %>"
+                    onclick="history.go(0)">
+                Submit
             </button>
           </td>
           <td>

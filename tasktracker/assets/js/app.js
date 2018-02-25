@@ -127,8 +127,32 @@ function control_click_delete(ev) {
   });
 }
 
+function control_click_submit(ev) {
+  let btn = $(ev.target);
+  let task_id = btn.data('task-id');
+  let start_time = $('.start-time').val();
+  let end_time = $('.end-time').val();
+  alert(start_time);
+  alert(end_time);
+  let text = JSON.stringify({
+    time: {
+      task_id: task_id,
+      start_time: start_time,
+      end_time: end_time,
+      completed: false
+    },
+  });
+  $.ajax(time_path, {
+    method: "post",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: text,
+    success: (resp) => { set_button(task_id, resp.data.id, false); },
+  });
+}
+
 function init_control() {
-  if (!$('.start-end-button') && !$('.delete-button')) {
+  if (!$('.start-end-button') && !$('.delete-button') && !$('.submit-button')) {
     return;
   }
   if ($('.start-end-button')) {
@@ -136,6 +160,9 @@ function init_control() {
   }
   if ($('.delete-button')) {
     $(".delete-button").click(control_click_delete);
+  }
+  if ($('.submit-button')) {
+    $(".submit-button").click(control_click_submit);
   }
   update_buttons();
 }
