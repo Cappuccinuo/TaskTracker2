@@ -43,6 +43,11 @@ defmodule Tasktracker.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_name(id) do
+    %User{:name => name} = get_user!(id)
+    name
+  end
+
   def get_manager(id) do
     %User{:manager_id => manager_id} = get_user!(id)
     manager_id

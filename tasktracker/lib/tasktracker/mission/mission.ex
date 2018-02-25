@@ -49,6 +49,20 @@ defmodule Tasktracker.Mission do
     |> Enum.into(%{})
   end
 
+  def task_initiator_map_for do
+    tasks = list_tasks()
+    tasks
+    |> Enum.map(&({&1.id, %{id: &1.user_id, name: Tasktracker.Accounts.get_user_name(&1.user_id)}}))
+    |> Enum.into(%{})
+  end
+
+  def task_worker_map_for do
+    tasks = list_tasks()
+    tasks
+    |> Enum.map(&({&1.id, %{id: &1.worker_id, name: Tasktracker.Accounts.get_user_name(&1.worker_id)}}))
+    |> Enum.into(%{})
+  end
+
   @doc """
   Gets a single task.
 

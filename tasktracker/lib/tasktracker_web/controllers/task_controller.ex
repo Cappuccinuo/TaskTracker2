@@ -18,7 +18,9 @@ defmodule TasktrackerWeb.TaskController do
   def index(conn, _params, _current_user) do
     tasks = Mission.list_tasks()
     users = Accounts.list_users()
-    render(conn, "index.html", tasks: tasks, users: users)
+    task_initiator_map = Mission.task_initiator_map_for()
+    task_worker_map = Mission.task_worker_map_for()
+    render(conn, "index.html", tasks: tasks, users: users, timap: task_initiator_map, twmap: task_worker_map)
   end
 
   #def index(conn, _params, current_user) do

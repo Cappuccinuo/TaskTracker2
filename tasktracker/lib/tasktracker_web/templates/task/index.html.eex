@@ -15,18 +15,10 @@
       <td><%= task.title %></td>
       <td><%= task.description %></td>
       <td>
-        <%= for user <- @users do %>
-          <%= if task.user_id == user.id do %>
-            <%= user.name %>(<%= user.id %>)
-          <% end %>
-        <% end %>
+        <%= @timap[task.id].name %>(<%= @timap[task.id].id %>)
       </td>
       <td>
-        <%= for user <- @users do %>
-          <%= if task.worker_id == user.id do %>
-            <%= user.name %>(<%= user.id %>)
-          <% end %>
-        <% end %>
+        <%= @twmap[task.id].name %>(<%= @twmap[task.id].id %>)
       </td>
 
       <%= if @current_user.id == task.user_id or @current_user.id == task.worker_id do %>
