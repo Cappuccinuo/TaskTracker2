@@ -6,11 +6,11 @@
 use Mix.Config
 
 # General application configuration
-config :tasktracker,
+config :tasktracker2,
   ecto_repos: [Tasktracker.Repo]
 
 # Configures the endpoint
-config :tasktracker, TasktrackerWeb.Endpoint,
+config :tasktracker2, TasktrackerWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "A3N5YzN8PjHMnS2ZMAh+ym6eIsu/uNZ9U2tmQbNSGYpYkWzmLdudCmHRr/fUTd9A",
   render_errors: [view: TasktrackerWeb.ErrorView, accepts: ~w(html json)],
@@ -23,7 +23,7 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :guardian, Guardian,
-  issuer: "TaskTracker",
+  issuer: "TaskTracker2",
   ttl: {30, :days},
   verify_issuer: true,
   verify_module: Guardian.JWT,

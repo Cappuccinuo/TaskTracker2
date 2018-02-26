@@ -3,7 +3,7 @@ defmodule Tasktracker.Mixfile do
 
   def project do
     [
-      app: :tasktracker,
+      app: :tasktracker2,
       version: "0.0.1",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
@@ -42,7 +42,8 @@ defmodule Tasktracker.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:guardian, "~> 0.14"},
-      {:timex, "~> 3.1"}
+      {:timex, "~> 3.1"},
+      {:distillery, "~> 1.5", runtime: false}
     ]
   end
 

@@ -2,7 +2,7 @@ use Mix.Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :tasktracker, TasktrackerWeb.Endpoint,
+config :tasktracker2 TasktrackerWeb.Endpoint,
   http: [port: 4001],
   server: false
 
@@ -10,10 +10,10 @@ config :tasktracker, TasktrackerWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :tasktracker, Tasktracker.Repo,
+config :tasktracker2, Tasktracker.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "tasktracker_test",
+  username: "task",
+  password: "123456",
+  database: "tasktracker2_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
