@@ -20,7 +20,7 @@
   <div class="form-group">
     <%= label f, :manager_id, class: "control-label" %>
     <span>
-      (Please input user's id.)
+      (Please input user's id, can be null.)
     </span>
     <%= text_input f, :manager_id, class: "form-control" %>
     <%= error_tag f, :manager_id %>
