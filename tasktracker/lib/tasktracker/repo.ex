@@ -1,5 +1,5 @@
 defmodule Tasktracker.Repo do
-  use Ecto.Repo, otp_app: :tasktracker
+  use Ecto.Repo, otp_app: :tasktracker2
 
   @doc """
   Dynamically loads the repository url from the
