@@ -9,11 +9,13 @@
     </tr>
   </thead>
   <tbody>
+    <%= if @manager != nil do %>
       <tr>
         <td><%= @manager.id %></td>
         <td><%= @manager.email %></td>
         <td><%= @manager.name %></td>
       </tr>
+    <% end %>
   </tbody>
 </table>
 

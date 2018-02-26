@@ -50,8 +50,12 @@ defmodule Tasktracker.Accounts do
 
   def get_manager(id) do
     %User{:manager_id => manager_id} = get_user!(id)
-    manager_id
-    |> get_user!()
+    if manager_id == nil do
+      nil
+    else
+      manager_id
+      |> get_user!()
+    end
   end
 
   @doc """

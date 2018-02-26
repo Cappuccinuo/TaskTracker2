@@ -10,7 +10,7 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Completed</th>
+      <th>Status</th>
       <th>Start Time</th>
       <th>End Time</th>
       <th>Worker</th>
@@ -26,7 +26,7 @@
             <%= for tt <- @task_time_map[task.id] do %>
               <p>
                 <%= if tt != nil do %>
-                  <%= tt.completed %>
+                  <%= complete_status tt.completed %>
                 <% end %>
               </p>
             <% end %>
@@ -35,7 +35,7 @@
             <%= for tt <- @task_time_map[task.id] do %>
               <p>
                 <%= if tt != nil do %>
-                  <%= tt.start_time %>
+                  <%= cast_time tt.start_time %>
                 <% end %>
               </p>
             <% end %>
@@ -44,7 +44,7 @@
             <%= for tt <- @task_time_map[task.id] do %>
               <p>
                 <%= if tt != nil do %>
-                  <%= tt.end_time %>
+                  <%= cast_time tt.end_time %>
                 <% end %>
               </p>
             <% end %>

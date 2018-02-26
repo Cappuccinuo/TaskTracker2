@@ -13,6 +13,7 @@
     </tr>
   </thead>
   <tbody>
+<%= if @current_user do %>
 <%= for user <- @users do %>
     <tr>
       <td>
@@ -21,7 +22,9 @@
       <td><%= user.email %></td>
       <td><%= user.name %></td>
       <td>
-        <%= user.manager_id %>
+        <%= if user.manager_id != nil do %>
+          <%= user.manager_id %>
+        <% end %>
       </td>
 
       <%= if @current_user.id == user.id do %>
@@ -32,6 +35,11 @@
       </td>
       <% end %>
     </tr>
+<% end %>
+<% else %>
+<p>
+  You must sign in first.
+</p>
 <% end %>
   </tbody>
 </table>

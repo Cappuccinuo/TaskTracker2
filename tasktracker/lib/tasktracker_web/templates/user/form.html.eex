@@ -19,6 +19,9 @@
 
   <div class="form-group">
     <%= label f, :manager_id, class: "control-label" %>
+    <span>
+      (Please input user's id.)
+    </span>
     <%= text_input f, :manager_id, class: "form-control" %>
     <%= error_tag f, :manager_id %>
   </div>
@@ -26,4 +29,29 @@
   <div class="form-group">
     <%= submit "Create User", class: "btn btn-primary" %>
   </div>
+</br>
+  <table class="table">
+    <h4>All Users</h4>
+    <thead>
+      <tr>
+        <th>
+          Id
+        </th>
+        <th>Email</th>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for user <- @users do %>
+      <tr>
+        <td>
+          <%= user.id %>
+        </td>
+        <td><%= user.email %></td>
+        <td><%= user.name %></td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
 <% end %>

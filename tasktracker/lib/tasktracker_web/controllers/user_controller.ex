@@ -13,17 +13,27 @@ defmodule TasktrackerWeb.UserController do
 
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})
-    render(conn, "new.html", changeset: changeset)
+    users = Accounts.list_users()
+    render(conn, "new.html", changeset: changeset, users: users)
   end
 
   def create(conn, %{"user" => user_params}) do
-    case Accounts.create_user(user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User #{user.name} created successfully.")
-        |> redirect(to: user_path(conn, :show, user))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+    users = Accounts.list_users()
+    %{"manager_id" => manager_id} = user_params
+    if manager_id != "" and Tasktracker.Repo.get(Tasktracker.Accounts.User, manager_id) == nil do
+      conn
+      |> put_flash(:error, "manager_id invalid")
+      |> redirect(to: user_path(conn, :new))
+      |> halt()
+    else
+      case Accounts.create_user(user_params) do
+        {:ok, user} ->
+          conn
+          |> put_flash(:info, "User #{user.name} created successfully.")
+          |> redirect(to: user_path(conn, :show, user))
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "new.html", changeset: changeset, users: users)
+      end
     end
   end
 
@@ -34,20 +44,29 @@ defmodule TasktrackerWeb.UserController do
 
   def edit(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
+    users = Accounts.list_users()
     changeset = Accounts.change_user(user)
-    render(conn, "edit.html", user: user, changeset: changeset)
+    render(conn, "edit.html", user: user, changeset: changeset, users: users)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
+    %{"manager_id" => manager_id} = user_params
+    if Tasktracker.Repo.get(Tasktracker.Accounts.User, manager_id) == nil do
+      conn
+      |> put_flash(:error, "manager_id invalid")
+      |> redirect(to: user_path(conn, :index))
+      |> halt()
+    else
+      user = Accounts.get_user!(id)
 
-    case Accounts.update_user(user, user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: user_path(conn, :show, user))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
+      case Accounts.update_user(user, user_params) do
+        {:ok, user} ->
+          conn
+          |> put_flash(:info, "User updated successfully.")
+          |> redirect(to: user_path(conn, :show, user))
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "edit.html", user: user, changeset: changeset)
+      end
     end
   end
 

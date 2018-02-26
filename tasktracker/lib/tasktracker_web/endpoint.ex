@@ -1,5 +1,5 @@
 defmodule TasktrackerWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :tasktracker
+  use Phoenix.Endpoint, otp_app: :tasktracker2
 
   socket "/socket", TasktrackerWeb.UserSocket
 
@@ -8,7 +8,7 @@ defmodule TasktrackerWeb.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :tasktracker, gzip: false,
+    at: "/", from: :tasktracker2, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
