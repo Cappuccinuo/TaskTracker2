@@ -1,8 +1,12 @@
 <h2>Assigned Tasks</h2>
 
 <style>
+h2 {
+  margin-left: -100px;
+}
 .table {
   width: 1000px;
+  margin-left: -100px;
 }
 </style>
 
